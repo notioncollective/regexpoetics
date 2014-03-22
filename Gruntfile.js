@@ -1,12 +1,15 @@
 module.exports = function (grunt) {
 
   grunt.initConfig({
+
     pkg: grunt.file.readJSON('package.json'),
+
     develop: {
       server: {
         file: 'app.js'
       }
     },
+
     regarde: {
       js: {
         files: [
@@ -23,8 +26,33 @@ module.exports = function (grunt) {
         files: ['views/*.jade'],
         tasks: ['livereload']
       }
+    },
+    
+    // grunt watch tasks
+    watch: {
+      styles: {
+        files : 'public/stylesheets/*.less',
+        tasks: ['less:dev'],
+        options: {
+          nospawn: true
+        }
+      }
+    },
+
+    // less compiling
+    less: {
+      dev: {
+        options : {
+          paths : 'public/stylesheets'
+        },
+        files: {
+          'public/stylesheets/style.css' : 'public/stylesheets/style.less'
+        }
+      }
     }
+
 	});
+
   grunt.registerTask('delayed-livereload', 'delayed livereload', function () {
     var done = this.async();
     setTimeout(function () {
@@ -32,9 +60,13 @@ module.exports = function (grunt) {
       done();
     }, 500);
   });
+
 	grunt.loadNpmTasks('grunt-develop');
   grunt.loadNpmTasks('grunt-regarde');
   grunt.loadNpmTasks('grunt-contrib-livereload');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-less');
 
-  grunt.registerTask('default', ['livereload-start', 'develop', 'regarde']);
+  grunt.registerTask('start', ['livereload-start', 'develop', 'regarde']);
+  grunt.registerTask('default', ['watch']);
 };

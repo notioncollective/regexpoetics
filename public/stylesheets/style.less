@@ -1,0 +1,37 @@
+@import "../components/normalize-less/normalize.less";
+
+@accent: #777;
+@rulesText: #9BF29E;
+@poesyText: #ddd;
+
+
+body {
+	height: 100%;
+	pisition: relative;
+	font-size: 30px;
+}
+
+textarea {
+	width: 100%;
+	border: none;
+	font-family: monospace;
+	color: #ddd;
+	background: #111;
+}
+
+textarea#Rules {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 20%;
+	color: @rulesText;
+}
+
+textarea#Text {
+	position: absolute;
+	top: 20%;
+	left: 0;
+	height: 80%;
+	color: @poesyText;
+	border-top: 3px dotted @accent;
+}
