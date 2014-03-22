@@ -19,6 +19,14 @@ Start the server:
 
 Open up your browser to [http://localhost:3000](http://localhost:3000)
 
+## OSC Endpoints
+
+ * `/com/notioncollective/key` - fires on every keydown in text input
+ * `/com/notioncollective/notes` - each individual matched note is a separate param, with a number
+ * `/com/notioncollective/words` - word count for entire contents of text input
+ * `/com/notioncollective/chars` - chartacter count for entire contents of text input
+ * `/com/notioncollective/count/[n]` - count of matches for regex #n
+
 
 ## Todo
 
@@ -28,13 +36,22 @@ Open up your browser to [http://localhost:3000](http://localhost:3000)
  		- reset text
  		- send "stop" osc message
  - Add additional messages based on stats, etc
- 	- Word count
- 	- Char count
+ 	- Global
+ 		- Word count
+ 		- Char count
+ 		- Bang per key press
+ 	- Per regex
+ 		- Count
+ 		- Musical notes
+ 			- Would parse all matches and then trigger notes for each match
+
+
+## Release Notes
+
+### 0.0.2
  - Set interface to automatically sync text fields
  	- text updates
  	- regex updates with info about whether regexes are evaluating correctly
-
-## Release Notes
 
 ### 0.0.1
 
