@@ -56,8 +56,8 @@ function onServerStart() {
 function onSocketConnect(socket) {
   console.log("Socket.io running on port " + app.get('port'));
   // register events
-  socket.on('Rules', onRulesUpdate);
-  socket.on('Text', onTextUpdate)
+  socket.on('/com/notioncollective/rules', onRulesUpdate);
+  socket.on('/com/notioncollective/text', onTextUpdate)
 }
 
 function onRulesUpdate(data) {
@@ -68,19 +68,18 @@ function onRulesUpdate(data) {
   regExes = processRegExes(data.text)
 
   if(regExes && regExes.length) {
-    cachedRegExes = regExes;
-    processText(cachedText, cachedRegExes);
+    processText(cachedText, setRules(regExes, data.text));
   }
 }
 
 function onTextUpdate(data) {
   console.log('text update', data);
-  processText(data.text, cachedRegExes);
+  processText(setText(data.text), cachedRegExes);
 }
 
 function processRegExes(regExesStr) {
   // @todo: this will currently disallow using the `/` character in any regular expressions
-  var regExesParser = /\/.+?\//g,
+  var regExesParser = /^(\/.+?\/\s?)+?$/,
       regExStrings,
       isValid = true,
       regExes = [];
@@ -89,12 +88,13 @@ function processRegExes(regExesStr) {
 
   // a basic test to make sure we are parsing correctly
   if(!regExesParser.test(regExesStr)) {
+    rulesInvalid(regExesStr);
     return;
   } else {
 
     // get matches from our rules string -- each of these
     // should be a regular expression
-    regExStrings = regExesStr.match(regExesParser);
+    regExStrings = regExesStr.match(regExesParser).slice(1);
 
     console.log('regExStrings', regExStrings);
 
@@ -116,6 +116,7 @@ function processRegExes(regExesStr) {
     // if none were invalidated, let's update
     // our cached regexes
     if(!isValid) {
+      rulesInvalid(regExesStr);
       return;
     }
   }
@@ -135,3 +136,40 @@ function processText(text, regExes) {
     }
   });
 }
+
+function rulesInvalid(str) {
+  var msg = {
+      valid: false
+      , text: str
+    };
+
+  console.log('send rules invalid update', str)
+  connection.emit('/com/notioncollective/rules', msg);
+
+  return str;
+}
+
+function setRules(re, str) {
+  var msg = {
+      valid: true
+      , text: str
+    };
+
+  cachedRegExes = re;
+
+  console.log('send rules update', msg);
+  connection.emit('/com/notioncollective/rules', msg);
+
+  return re;
+}
+
+function setText(str) {
+  var msg = { text : str };
+
+  cachedText = str;
+  console.log('send text update', msg);
+  connection.emit('/com/notioncollective/text', msg);
+
+  return str;
+}
+

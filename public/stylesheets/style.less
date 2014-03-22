@@ -2,6 +2,7 @@
 
 @accent: #777;
 @rulesText: #9BF29E;
+@rulesTextInvalid: #FA0505;
 @poesyText: #ddd;
 
 
@@ -25,6 +26,10 @@ textarea#Rules {
 	left: 0;
 	height: 20%;
 	color: @rulesText;
+
+	&.invalid {
+		color: @rulesTextInvalid;
+	}
 }
 
 textarea#Text {
