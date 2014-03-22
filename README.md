@@ -23,10 +23,16 @@ Open up your browser to [http://localhost:3000](http://localhost:3000)
 
  * `/com/notioncollective/key` - fires on every keydown in text input
  * `/com/notioncollective/notes` - each individual matched note is a separate param, with a number
+ * `/com/notioncollective/notes/[n]` same as above, but only for the selected regex
  * `/com/notioncollective/words` - word count for entire contents of text input
  * `/com/notioncollective/chars` - chartacter count for entire contents of text input
+ * `/com/notioncollective/count/[n]` - count of matches for all regexes
  * `/com/notioncollective/count/[n]` - count of matches for regex #n
 
+## Some handy regular expressions
+
+ * `/[^\s]*?abc[^\s]*?$/` - Capture words that contain "abc" only if they are the last word in the line
+ * _How to do **not** "money"? [Almost there but not quite](http://stackoverflow.com/questions/406230/regular-expression-to-match-string-not-containing-a-word)_
 
 ## Todo
 
@@ -44,6 +50,7 @@ Open up your browser to [http://localhost:3000](http://localhost:3000)
  		- Count
  		- Musical notes
  			- Would parse all matches and then trigger notes for each match
+ - Maybe we should use captures and not matches? Have to theink about this a bit
 
 
 ## Release Notes
