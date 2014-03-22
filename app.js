@@ -8,11 +8,14 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , io = require('socket.io')
+  , osc = require('node-osc')
   , _ =require('underscore');
 
 var app = express()
+    , host = '0.0.0.0'
     , server = http.createServer(app)
     , connection
+    , oscClient
     , cachedRegExes = []
     , cachedText = '';
 
@@ -34,12 +37,17 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 
+// setup the osc server
+oscClient = new osc.Client('192.168.0.16', 9001);
+
 // setup the socket.io connection
 connection = io.listen(server);
+
 // listen for connection event
 connection.sockets.on('connection', onSocketConnect);
-// start the server
-server.listen(app.get('port'), onServerStart);
+
+// start the web server
+server.listen(app.get('port'), host, onServerStart);
 
 function onServerStart() {
   console.log("Express server listening on port " + app.get('port'));
@@ -120,6 +128,10 @@ function processRegExes(regExesStr) {
 
 function processText(text, regExes) {
   regExes.forEach(function(re, i) {
-    console.log('test re for exp '+i, text.match(re));
+    var matches = text.match(re);
+    if(matches) {
+      console.log('test re for exp '+i, matches, matches.length);
+      oscClient.send('/com/notioncollective/'+i, matches.length);
+    }
   });
 }

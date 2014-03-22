@@ -67,6 +67,5 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-less');
 
-  grunt.registerTask('start', ['livereload-start', 'develop', 'regarde']);
-  grunt.registerTask('default', ['watch']);
+  grunt.registerTask('default', ['livereload-start', 'develop', 'regarde']);
 };
