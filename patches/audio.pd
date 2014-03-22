@@ -1,14 +1,14 @@
-#N canvas 840 22 840 1002 10;
+#N canvas 0 22 1280 752 10;
 #X declare -lib mrpeach;
 #X declare -lib mrpeach;
 #X obj 104 -85 adc~;
-#X obj 149 731 dac~;
+#X obj -67 481 dac~;
 #X obj 272 17 nc_simple_delay~;
-#X obj 271 285 nc_freeverb_gui~;
+#X obj -60 166 nc_freeverb_gui~;
 #X obj 393 -81 nc_osc_receive;
 #X obj -144 -82 import mrpeach;
 #X obj 569 -22 print;
-#X obj 274 619 nc_limiter~;
+#X obj -58 439 nc_limiter~;
 #X obj 393 -52 routeOSC /0;
 #X obj 505 -52 routeOSC /1;
 #X obj 394 -18 print;

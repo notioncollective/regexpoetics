@@ -172,26 +172,34 @@ body {
   height: 100%;
   pisition: relative;
   font-size: 30px;
+  background: #111111;
 }
 textarea {
   width: 100%;
   border: none;
   font-family: monospace;
   color: #ddd;
-  background: #111;
+  background: #111111;
 }
 textarea#Rules {
   position: absolute;
   top: 0;
   left: 0;
-  height: 20%;
+  height: 10%;
   color: #9bf29e;
 }
 textarea#Text {
   position: absolute;
-  top: 20%;
+  top: 10%;
   left: 0;
-  height: 80%;
+  height: 90%;
   color: #dddddd;
   border-top: 3px dotted #777777;
+}
+nav#Nav {
+  position: absolute;
+  top: 90%;
+  left: 0;
+  height: 10%;
+  padding: 5px;
 }

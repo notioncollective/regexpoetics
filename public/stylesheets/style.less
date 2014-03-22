@@ -1,5 +1,6 @@
 @import "../components/normalize-less/normalize.less";
 
+@background: #111;
 @accent: #777;
 @rulesText: #9BF29E;
 @poesyText: #ddd;
@@ -9,6 +10,7 @@ body {
 	height: 100%;
 	pisition: relative;
 	font-size: 30px;
+	background: @background;
 }
 
 textarea {
@@ -16,22 +18,30 @@ textarea {
 	border: none;
 	font-family: monospace;
 	color: #ddd;
-	background: #111;
+	background: @background;
 }
 
 textarea#Rules {
 	position: absolute;
 	top: 0;
 	left: 0;
-	height: 20%;
+	height: 10%;
 	color: @rulesText;
 }
 
 textarea#Text {
 	position: absolute;
-	top: 20%;
+	top: 10%;
 	left: 0;
-	height: 80%;
+	height: 90%;
 	color: @poesyText;
 	border-top: 3px dotted @accent;
+}
+
+nav#Nav {
+	position: absolute;
+	top: 90%;
+	left: 0;
+	height: 10%;
+	padding: 5px;	
 }
