@@ -5,5 +5,12 @@
     "**/.*",
     "node_modules",
     "components"
-  ]
+  ],
+  "dependencies": {
+    "socket.io-client": "~1.0.0-pre",
+    "requirejs": "~2.1.11",
+    "jquery": "~2.1.0",
+    "underscore": "~1.6.0",
+    "normalize-less": "latest"
+  }
 }
