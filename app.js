@@ -57,7 +57,8 @@ function onSocketConnect(socket) {
   console.log("Socket.io running on port " + app.get('port'));
   // register events
   socket.on('/com/notioncollective/rules', onRulesUpdate);
-  socket.on('/com/notioncollective/text', onTextUpdate)
+  socket.on('/com/notioncollective/text', onTextUpdate);
+  socket.on('/com/notioncollective/key', onTextKeyPress);
 }
 
 function onRulesUpdate(data) {
@@ -70,6 +71,11 @@ function onRulesUpdate(data) {
   if(regExes && regExes.length) {
     processText(cachedText, setRules(regExes, data.text));
   }
+}
+
+function onTextKeyPress() {
+  console.log('text keypress');
+  oscClient.send('/com/notioncollective/key', 1);
 }
 
 function onTextUpdate(data) {

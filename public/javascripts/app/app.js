@@ -38,6 +38,7 @@ define([
 
 		$rulesInput.keyup(onTextAreaChange);
 		$textInput.keyup(onTextAreaChange);
+		$textInput.keypress(onTextKeyPress);
 	}
 
 	function onTextAreaChange(e) {
@@ -50,6 +51,10 @@ define([
 			connection.emit('/com/notioncollective/'+evt, {text: text});
 		}
 
+	}
+
+	function onTextKeyPress(e) {
+		connection.emit('/com/notioncollective/key');
 	}
 
 	function onUpdateRules(data) {
