@@ -274,11 +274,15 @@ function getChannel(name, rule) {
 	var ns = '/com/notioncollective/',
 		channel;
 
-	if(rule) {
-		return ns+rule+'/'+name;
+	if(_.isFinite(rule)) {
+		channel = ns+rule+'/'+name;
 	} else {
-		return ns + name;
+		channel = ns + name;
 	}
+
+	console.log('channel '+channel);
+
+	return channel;
 }
 
 /**
