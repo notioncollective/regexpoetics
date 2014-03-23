@@ -25,13 +25,16 @@ Open up your browser to [http://localhost:3000](http://localhost:3000)
  * `/com/notioncollective/notes` - each individual matched note is a separate param, with a number
  * `/com/notioncollective/notes/[n]` same as above, but only for the selected regex
  * `/com/notioncollective/words` - word count for entire contents of text input
+ * `/com/notioncollective/words/[n]` - word count for matches of expression n
  * `/com/notioncollective/chars` - chartacter count for entire contents of text input
+ * `/com/notioncollective/chars/[n]` - character count for matches for expression n
  * `/com/notioncollective/count` - count of matches for all regexes
  * `/com/notioncollective/count/[n]` - count of matches for regex #n
 
 ## Some handy regular expressions
 
  * `/[^\s]*?abc[^\s]*?$/` - Capture words that contain "abc" only if they are the last word in the line
+ * `/\w+\.$/` - Capture the last word in a sentence followed by a period.
  * _How to do **not** "money"? [Almost there but not quite](http://stackoverflow.com/questions/406230/regular-expression-to-match-string-not-containing-a-word)_
 
 ## Todo
@@ -41,19 +44,28 @@ Open up your browser to [http://localhost:3000](http://localhost:3000)
  	- Reset button
  		- reset text
  		- send "stop" osc message
- - Add additional messages based on stats, etc
- 	- Global
- 		- Word count
- 		- Char count
- 		- Bang per key press
- 	- Per regex
- 		- Count
- 		- Musical notes
- 			- Would parse all matches and then trigger notes for each match
- - Maybe we should use captures and not matches? Have to theink about this a bit
-
+ - Maybe we should use captures and not matches? Have to think about this a bit
+ - Abstract messaging a bit so that all osc messages are also sent back to the client
+ - Update namespacing to "/com/nc/regexpoetics/" ? Or something project-specific.
+ - BUG: Sometimes live updating interferes with your typing.
+ 	- Possible fix: each client gets a client id, sends that id with messages. 
 
 ## Release Notes
+
+### 0.0.4
+ * Added osc paths or individual expression word count, or individual expression char count.
+ * A few bug fixes
+
+### 0.0.3
+- Updated messages to include the following
+	- Global
+		- Word count
+		- Char count
+		- Bang per key press
+	- Per regex
+		- Count (global and per expression)
+		- Musical notes (global and per expression)
+- Update so text area content will not update when focused
 
 ### 0.0.2
  - Set interface to automatically sync text fields

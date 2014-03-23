@@ -38,6 +38,7 @@ define([
 
 		$rulesInput.keyup(onTextAreaChange);
 		$textInput.keyup(onTextAreaChange);
+		$textInput.keypress(onTextKeyPress);
 	}
 
 	function onTextAreaChange(e) {
@@ -52,18 +53,24 @@ define([
 
 	}
 
+	function onTextKeyPress(e) {
+		connection.emit('/com/notioncollective/key');
+	}
+
 	function onUpdateRules(data) {
 		console.log('rules update', data);
 		if($rulesInput) {
-			$rulesInput
-				.val(data.text)
-				.toggleClass('invalid', !data.valid);
+			$rulesInput.toggleClass('invalid', !data.valid);
+
+			if(!$rulesInput.is(':focus')) {
+				$rulesInput.val(data.text)
+			}
 		}
 	}
 
 	function onUpdateText(data) {
 		console.log('text update', data)
-		if($textInput) {
+		if($textInput && !$textInput.is(':focus')) {
 			$textInput.val(data.text);
 		}
 	}
