@@ -164,62 +164,112 @@ function processRegExes(regExesStr) {
  * @param  {Array} regExes An array of regular expressions for processing
  */
 function processText(text, regExes) {
-	var globalLength = 0,
-			charsCount = text.length,
-			wordsCount = text.split(/\s+/).length;
+	var globalCount = 0,
+		charsCount = text.length,
+		wordsCount = text.split(/\s+/).length;
 
-	oscClient.send('/com/notioncollective/chars', charsCount);
-	oscClient.send('/com/notioncollective/words', wordsCount);
+	// send global counts
+	sendCharsCount(charsCount);
+	sendWordsCount(wordsCount);
 
+	// parse for note messages
+	parseNotes(text, regExes);
 
-  regExes.forEach(function(re, i) {
-		var matches = text.match(re);
+	// evaluate individual regexes
+	regExes.forEach(function(re, i) {
+		var matches = text.match(re),
+			count;
 
 		if(matches) {
-			globalLength += matches.length;
+			count = matches.length;
+			globalCount += count;
 
-		  console.log('test re for exp '+i, matches, matches.length);
+		 	console.log('test re for exp '+i, matches, count);
 
-		  oscClient.send('/com/notioncollective/count/'+i, matches.length);
+		 	// send matches count for this regex
+		 	oscClient.send('/com/notioncollective/count/'+i, count);
 		}
-  });
+	});
 
-	oscClient.send('/com/notioncollective/count/', globalLength);
+
+	console.log('send global matches count: ', globalCount);
+	// send global matches count
+	oscClient.send('/com/notioncollective/count/', globalCount);
 
 }
 
+/**
+ * Sends characters count to osc and to client
+ * @param  {Number} count Number of characters
+ */
+function sendCharsCount(count) {
+	console.log('send chars count: '+count);
+	oscClient.send('/com/notioncollective/chars', count);
+	connection.emit('/com/notioncollective/chars', {count: count});
+}
+
+/**
+ * Sends words count to osc and to client
+ * @param  {Number} count Number of words
+ */
+function sendWordsCount(count) {
+	console.log('send words count: '+count);
+	oscClient.send('/com/notioncollective/words', count);
+	connection.emit('/com/notioncollective/words', {count: count});
+}
+
+/**
+ * Parse note values given text and regular expressions. Will send osc messages
+ * for global notes and notes within specific regular expression matches
+ * @param  {String} text    Current text value
+ * @param  {Array} regExes Array of regular expressions
+ */
 function parseNotes(text, regExes) {
   var notesRegEx = /[abcdefg]/g,
 	  globalNotes = _.uniq(text.match(notesRegEx));
 
-	sendNotesMessage('/com/notioncollective/notes', globalNotes);
+	oscClient.send(createNotesMessage('/com/notioncollective/notes', globalNotes));
 
-  regExes.forEach(function(re, i) {
-		var matches = text.match(re),
-				notes = _.uniq(matches.join().match(notesRegEx));
+	regExes.forEach(function(re, i) {
+		var matches = text.match(re)
+			, notes;
 
-		sendNotesMessage('/com/notioncollective/notes/'+i, notes);
+		if(matches) {
+			notes = _.uniq(matches.join().match(notesRegEx));
 
-  });
+			// send notes message for indi
+			oscClient.send(createNotesMessage('/com/notioncollective/notes/'+i, notes));
+		}
+
+	});
 }
 
-function sendNotesMessage(endpoint, notes) {
-	var msg = new oscClient.message(endpoint),
-			noteMapping: {
-				'c' : 60
-				, 'd' : 62
-				, 'e' : 64
-				, 'f' : 65
-				, 'g' : 67
-				, 'a' : 69
-				, 'b' : 71
-			}
+/**
+ * Create an osc message with note values based on an array of 
+ * note characters.
+ * @param  {String} endpoint Endpoint for osc message
+ * @param  {Array} notes    An array of note characters (`['a', 'b', 'f']);
+ * @return {Object}         An osc message with note values.
+ */
+function createNotesMessage(endpoint, notes) {
+	var msg = new osc.Message(endpoint),
+		noteMapping = {
+			'c' : 60
+			, 'd' : 62
+			, 'e' : 64
+			, 'f' : 65
+			, 'g' : 67
+			, 'a' : 69
+			, 'b' : 71
+		};
 
-			notes.forEach(function(note) {
-				if(noteMapping[note]) {
-					msg.append(noteMapping[note]);
-				}
-			});
+	notes.forEach(function(note) {
+		if(noteMapping[note]) {
+			msg.append(noteMapping[note]);
+		}
+	});
+
+	console.log('created notes message for '+endpoint+':', notes);
 
 	return msg;
 }

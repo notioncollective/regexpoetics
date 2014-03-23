@@ -51,7 +51,8 @@ Open up your browser to [http://localhost:3000](http://localhost:3000)
  		- Musical notes
  			- Would parse all matches and then trigger notes for each match
  - Maybe we should use captures and not matches? Have to theink about this a bit
-
+ - Abstract messaging a bit so that all osc messages are also sent back to the client
+ - Update namespacing to "/com/nc/regexpoetics/" ? Or something project-specific.
 
 ## Release Notes
 
