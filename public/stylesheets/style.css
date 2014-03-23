@@ -188,6 +188,9 @@ textarea#Rules {
   height: 10%;
   color: #9bf29e;
 }
+textarea#Rules.invalid {
+  color: #fa0505;
+}
 textarea#Text {
   position: absolute;
   top: 10%;

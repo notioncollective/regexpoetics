@@ -1,7 +1,7 @@
 requirejs.config({
 	baseUrl : './javascripts/'
 
-	, urlArguments : '_=' + (new Date()).getTime()
+	, urlArgs : '_=' + (new Date()).getTime()
 
 	, paths : {
 		'jquery' : '../components/jquery/dist/jquery'

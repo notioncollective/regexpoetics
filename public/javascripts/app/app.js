@@ -8,6 +8,8 @@ define([
 	, io
 ) {
 	var self = {},
+		$rulesInput,
+		$textInput,
 		connection;
 
 
@@ -21,25 +23,56 @@ define([
 		connection.on('error', onSocketError);
 		connection.on('disconnect', onSocketDisconnect);
 
+		// status updates
+		connection.on('/com/notioncollective/rules', onUpdateRules);
+		connection.on('/com/notioncollective/text', onUpdateText);	
+
 		$(onDomReady);
 	}
 
 	function onDomReady () {
 		console.log('domReady');
 
-		$('textarea').keyup(onTextAreaChange);
+		$rulesInput = $('textarea#Rules');
+		$textInput = $('textarea#Text');
+
+		$rulesInput.keyup(onTextAreaChange);
+		$textInput.keyup(onTextAreaChange);
+		$textInput.keypress(onTextKeyPress);
 	}
 
 	function onTextAreaChange(e) {
-		var id = $(this).attr('id'),
+		var evt = $(this).data('event'),
 			text = $(this).val();
 
-		console.log('text area change', id, text);
+		console.log('text area change', evt, text);
 
 		if(socketConnected()) {
-			connection.emit(id, {text: text});
+			connection.emit('/com/notioncollective/'+evt, {text: text});
 		}
 
+	}
+
+	function onTextKeyPress(e) {
+		connection.emit('/com/notioncollective/key');
+	}
+
+	function onUpdateRules(data) {
+		console.log('rules update', data);
+		if($rulesInput) {
+			$rulesInput.toggleClass('invalid', !data.valid);
+
+			if(!$rulesInput.is(':focus')) {
+				$rulesInput.val(data.text)
+			}
+		}
+	}
+
+	function onUpdateText(data) {
+		console.log('text update', data)
+		if($textInput && !$textInput.is(':focus')) {
+			$textInput.val(data.text);
+		}
 	}
 
 	function onSocketConnect() {
