@@ -4,12 +4,12 @@
  */
 
 var express = require('express')
-  , routes = require('./routes')
   , http = require('http')
   , path = require('path')
   , io = require('socket.io')
   , osc = require('node-osc')
-  , _ =require('underscore');
+  , _ = require('underscore')
+  , conf = require('./config');
 
 var app = express()
 	, host = '0.0.0.0'
@@ -35,7 +35,10 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/', routes.index);
+// we only hae one route so lets not get too fancy
+app.get('/', function(req, res){
+  res.render('index', conf);
+});
 
 // setup the osc server
 oscClient = new osc.Client('192.168.0.16', 9002);
@@ -66,6 +69,30 @@ function onSocketConnect(socket) {
   socket.on('/com/notioncollective/rules', onRulesUpdate);
   socket.on('/com/notioncollective/text', onTextUpdate);
   socket.on('/com/notioncollective/key', onTextKeyPress);
+  socket.on('/com/notioncollective/conf/oschost', onOscHostChange);
+  socket.on('/com/notioncollective/conf/oscport', onOscPortChange);
+  socket.on('/com/notioncollective/reset', onReset);
+
+}
+
+
+function onOscHostChange(data) {
+	console.log('change osc host to '+data.value)
+	if(oscClient && data.value) {
+		oscClient.host = data.value;
+	}
+}
+
+function onOscPortChange(data) {
+	console.log('change osc port to '+data.value)
+	if(oscClient && data.value) {
+		oscClient.port = data.value;
+	}
+}
+
+
+function onReset() {
+	console.log('reset sent');
 }
 
 /**

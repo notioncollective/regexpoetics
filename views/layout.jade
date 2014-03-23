@@ -7,7 +7,7 @@ html
 		script(src='components/requirejs/require.js', data-main='javascripts/main')
 	body
 		nav#Nav
-			input#OscHost(type='text' value='0.0.0.0')
-			input#OscPort(type='text' value='9001')
+			input#OscHost(type='text' placeholder='host' value=osc.host)
+			input#OscPort(type='text' placeholder='port' value=osc.port)
 			button#Reset reset
 		block content

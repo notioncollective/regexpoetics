@@ -7,10 +7,11 @@ define([
 	, _
 	, io
 ) {
-	var self = {},
-		$rulesInput,
-		$textInput,
-		connection;
+	var self = {}
+		, $rulesInput
+		, $textInput
+		, $nav
+		, connection;
 
 
 	function start () {
@@ -39,6 +40,37 @@ define([
 		$rulesInput.keyup(onTextAreaChange);
 		$textInput.keyup(onTextAreaChange);
 		$textInput.keypress(onTextKeyPress);
+
+		setupControls();
+	}
+
+	function setupControls() {
+		var $nav = $('#Nav')
+			, $hostInput = $nav.find('#OscHost')
+			, $portInput = $nav.find('#OscPort')
+			, $resetBtn = $nav.find('#Reset');
+
+		$hostInput.on('change', function(e) {
+			connection.emit('/com/notioncollective/conf/oschost', {value:$(this).val()});
+		});
+
+		$portInput.on('change', function(e) {
+			connection.emit('/com/notioncollective/conf/oscport', {value:$(this).val()});
+		});
+
+		$resetBtn.on('click', function(e) {
+			connection.emit('/com/notioncollective/reset');
+		});
+
+		$(window).mousemove(function(e){
+			var threshold = 50;
+			if(e.pageY > $(window).height()-50) {
+				$nav.slideDown();
+			} else {
+				$nav.slideUp();
+			}
+		});
+
 	}
 
 	function onTextAreaChange(e) {
