@@ -34,6 +34,7 @@ Open up your browser to [http://localhost:3000](http://localhost:3000)
 ## Some handy regular expressions
 
  * `/[^\s]*?abc[^\s]*?$/` - Capture words that contain "abc" only if they are the last word in the line
+ * `/\w+\.$/` - Capture the last word in a sentence followed by a period.
  * _How to do **not** "money"? [Almost there but not quite](http://stackoverflow.com/questions/406230/regular-expression-to-match-string-not-containing-a-word)_
 
 ## Todo

@@ -169,8 +169,8 @@ function processText(text, regExes) {
 		wordsCount = text.split(/\s+/).length;
 
 	// send global counts
-	sendCharsCount(charsCount);
-	sendWordsCount(wordsCount);
+	processChars(text, regExes);
+	processWords(text, regExes);
 
 	// parse for note messages
 	parseNotes(text, regExes);
@@ -198,6 +198,51 @@ function processText(text, regExes) {
 
 }
 
+
+function processWords(text, regExes) {
+	var splitWordsRegEx = /\s+/,
+		globalCount = text.split(splitWordsRegEx).length;
+
+	sendToAll('/com/notioncollective/words', globalCount, {count:globalCount});
+
+	regExes.forEach(function(re, i) {
+		var matches = text.match(re),
+			count;
+
+		if(matches) {
+			count = _(matches)
+				.chain()
+				.map(function(m) {
+					return m.split(splitWordsRegEx)
+				})
+				.flatten()
+				.value().length;
+			
+			console.log('send word count for exp '+i, count);
+			sendToAll('/com/notioncollective/words/'+i, count, {count:count});
+		}
+	});
+
+}
+
+function processChars(text, regExes) {
+	var globalCount = text.length;
+
+	sendToAll('/com/notioncollective/chars', globalCount, {count:globalCount});
+
+	regExes.forEach(function(re, i) {
+		var matches = text.match(re),
+			count;
+
+		if(matches) {
+			count = matches.join().length;
+			
+			console.log('send char count for exp '+i, count);
+			sendToAll('/com/notioncollective/chars/'+i, count, {count:count});
+		}
+	});
+}
+
 /**
  * Sends characters count to osc and to client
  * @param  {Number} count Number of characters
@@ -216,6 +261,14 @@ function sendWordsCount(count) {
 	console.log('send words count: '+count);
 	oscClient.send('/com/notioncollective/words', count);
 	connection.emit('/com/notioncollective/words', {count: count});
+}
+
+
+function sendToAll(endpoint, oscData, ioData) {
+	console.log('send to '+endpoint+':', oscData, ioData);
+
+	oscClient.send(endpoint, oscData);
+	connection.emit(endpoint, ioData);
 }
 
 /**
