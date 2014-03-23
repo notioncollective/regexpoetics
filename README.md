@@ -44,13 +44,17 @@ Open up your browser to [http://localhost:3000](http://localhost:3000)
  	- Reset button
  		- reset text
  		- send "stop" osc message
- - Maybe we should use captures and not matches? Have to theink about this a bit
+ - Maybe we should use captures and not matches? Have to think about this a bit
  - Abstract messaging a bit so that all osc messages are also sent back to the client
  - Update namespacing to "/com/nc/regexpoetics/" ? Or something project-specific.
  - BUG: Sometimes live updating interferes with your typing.
  	- Possible fix: each client gets a client id, sends that id with messages. 
 
 ## Release Notes
+
+### 0.0.4
+ * Added osc paths or individual expression word count, or individual expression char count.
+ * A few bug fixes
 
 ### 0.0.3
 - Updated messages to include the following
