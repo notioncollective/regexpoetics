@@ -38,7 +38,7 @@ app.configure('development', function(){
 app.get('/', routes.index);
 
 // setup the osc server
-oscClient = new osc.Client('192.168.0.16', 9001);
+oscClient = new osc.Client('192.168.0.16', 9002);
 
 // setup the socket.io connection
 connection = io.listen(server);
@@ -110,7 +110,7 @@ function onTextUpdate(data) {
  */
 function processRegExes(regExesStr) {
   // @todo: this will currently disallow using the `/` character in any regular expressions
-  var regExesParser = /^(\/.+?\/\s?)+?$/,
+  var regExesParser = /(\/.+?\/)+?/g,
 	  regExStrings,
 	  isValid = true,
 	  regExes = [];
@@ -125,7 +125,7 @@ function processRegExes(regExesStr) {
 
 	// get matches from our rules string -- each of these
 	// should be a regular expression
-	regExStrings = regExesStr.match(regExesParser).slice(1);
+	regExStrings = regExesStr.match(regExesParser);
 
 	console.log('regExStrings', regExStrings);
 
@@ -228,8 +228,11 @@ function parseNotes(text, regExes) {
   var notesRegEx = /[abcdefg]/g,
 	  globalNotes = _.uniq(text.match(notesRegEx));
 
-	oscClient.send(createNotesMessage('/com/notioncollective/notes', globalNotes));
+	if(globalNotes && globalNotes.length) {
+		oscClient.send(createNotesMessage('/com/notioncollective/notes', globalNotes));
+	}
 
+	console.log('**current regexes', regExes);
 	regExes.forEach(function(re, i) {
 		var matches = text.match(re)
 			, notes;
@@ -237,9 +240,10 @@ function parseNotes(text, regExes) {
 		if(matches) {
 			notes = _.uniq(matches.join().match(notesRegEx));
 
-			// send notes message for indi
-			oscClient.send(createNotesMessage('/com/notioncollective/notes/'+i, notes));
-		}
+			if(notes && notes.length) {
+				oscClient.send(createNotesMessage('/com/notioncollective/notes/'+i, notes));
+			}
+		}	
 
 	});
 }
