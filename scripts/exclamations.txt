@@ -1,0 +1,5 @@
+/\w+\.$/ /\w+[!]$/ /\w+[?]$/
+
+Will send a signal to a different channel for last word of a sentence with a period, last word of a sentence with a eclamation point, and last word of a sentence with a question mark.
+
+Test would be a series of sentences.
