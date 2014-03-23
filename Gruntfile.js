@@ -22,6 +22,10 @@ module.exports = function (grunt) {
         files: ['public/stylesheets/*.css'],
         tasks: ['livereload']
       },
+      less: {
+        files: ['public/stylesheets/*.less'],
+        tasks: ['less']
+      }, 
       jade: {
         files: ['views/*.jade'],
         tasks: ['livereload']
@@ -29,15 +33,15 @@ module.exports = function (grunt) {
     },
     
     // grunt watch tasks
-    watch: {
-      styles: {
-        files : 'public/stylesheets/*.less',
-        tasks: ['less:dev'],
-        options: {
-          nospawn: true
-        }
-      }
-    },
+    // watch: {
+    //   styles: {
+    //     files : 'public/stylesheets/*.less',
+    //     tasks: ['less:dev'],
+    //     options: {
+    //       nospawn: true
+    //     }
+    //   }
+    // },
 
     // less compiling
     less: {
