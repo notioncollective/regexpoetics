@@ -54,6 +54,9 @@ Open up your browser to [http://localhost:3000](http://localhost:3000)
 
 ## Release Notes
 
+### 0.0.5
+ * Updated osc channels so that expression number comes first (`/com/notioncollective/0/chars`)
+
 ### 0.0.4
  * Added osc paths or individual expression word count, or individual expression char count.
  * A few bug fixes
