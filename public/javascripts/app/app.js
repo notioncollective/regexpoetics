@@ -60,15 +60,17 @@ define([
 	function onUpdateRules(data) {
 		console.log('rules update', data);
 		if($rulesInput) {
-			$rulesInput
-				.val(data.text)
-				.toggleClass('invalid', !data.valid);
+			$rulesInput.toggleClass('invalid', !data.valid);
+
+			if(!$rulesInput.is(':focus')) {
+				$rulesInput.val(data.text)
+			}
 		}
 	}
 
 	function onUpdateText(data) {
 		console.log('text update', data)
-		if($textInput) {
+		if($textInput && !$textInput.is(':focus')) {
 			$textInput.val(data.text);
 		}
 	}
