@@ -263,6 +263,13 @@ function sendWordsCount(count) {
 	connection.emit(getChannel('words'), {count: count});
 }
 
+
+/**
+ * Get a channel name.
+ * @param  {String} name Name of the channel ('notes')
+ * @param  {Number} rule Expression number for channel (optional)
+ * @return {String}      Channel name.
+ */
 function getChannel(name, rule) {
 	var ns = '/com/notioncollective/',
 		channel;
@@ -274,12 +281,17 @@ function getChannel(name, rule) {
 	}
 }
 
+/**
+ * Send information to osc and the socket.io client on the same channel.
+ * @param  {String} channel The channel to send to ('/com/notioncollective/notes')
+ * @param  {Object} oscData  Data to use in osc message
+ * @param  {Object} ioData   Data to send as socket.io message
+ */
+function sendToAll(channel, oscData, ioData) {
+	console.log('send to '+channel+':', oscData, ioData);
 
-function sendToAll(endpoint, oscData, ioData) {
-	console.log('send to '+endpoint+':', oscData, ioData);
-
-	oscClient.send(endpoint, oscData);
-	connection.emit(endpoint, ioData);
+	oscClient.send(channel, oscData);
+	connection.emit(channel, ioData);
 }
 
 /**
