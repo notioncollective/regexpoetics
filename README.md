@@ -25,7 +25,9 @@ Open up your browser to [http://localhost:3000](http://localhost:3000)
  * `/com/notioncollective/notes` - each individual matched note is a separate param, with a number
  * `/com/notioncollective/notes/[n]` same as above, but only for the selected regex
  * `/com/notioncollective/words` - word count for entire contents of text input
+ * `/com/notioncollective/words/[n]` - word count for matches of expression n
  * `/com/notioncollective/chars` - chartacter count for entire contents of text input
+ * `/com/notioncollective/chars/[n]` - character count for matches for expression n
  * `/com/notioncollective/count` - count of matches for all regexes
  * `/com/notioncollective/count/[n]` - count of matches for regex #n
 
