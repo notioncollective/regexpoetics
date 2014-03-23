@@ -90,7 +90,7 @@ function onRulesUpdate(data) {
  */
 function onTextKeyPress() {
   console.log('text keypress');
-  oscClient.send('/com/notioncollective/key', 1);
+  oscClient.send(getChannel('key'), 1);
 }
 
 /**
@@ -187,14 +187,14 @@ function processText(text, regExes) {
 		 	console.log('test re for exp '+i, matches, count);
 
 		 	// send matches count for this regex
-		 	oscClient.send('/com/notioncollective/count/'+i, count);
+		 	oscClient.send(getChannel('count', i), count);
 		}
 	});
 
 
 	console.log('send global matches count: ', globalCount);
 	// send global matches count
-	oscClient.send('/com/notioncollective/count', globalCount);
+	oscClient.send(getChannel('count'), globalCount);
 
 }
 
@@ -203,7 +203,7 @@ function processWords(text, regExes) {
 	var splitWordsRegEx = /\s+/,
 		globalCount = text.split(splitWordsRegEx).length;
 
-	sendToAll('/com/notioncollective/words', globalCount, {count:globalCount});
+	sendToAll(getChannel('words'), globalCount, {count:globalCount});
 
 	regExes.forEach(function(re, i) {
 		var matches = text.match(re),
@@ -219,7 +219,7 @@ function processWords(text, regExes) {
 				.value().length;
 			
 			console.log('send word count for exp '+i, count);
-			sendToAll('/com/notioncollective/words/'+i, count, {count:count});
+			sendToAll(getChannel('words', i), count, {count:count});
 		}
 	});
 
@@ -228,7 +228,7 @@ function processWords(text, regExes) {
 function processChars(text, regExes) {
 	var globalCount = text.length;
 
-	sendToAll('/com/notioncollective/chars', globalCount, {count:globalCount});
+	sendToAll(getChannel('chars'), globalCount, {count:globalCount});
 
 	regExes.forEach(function(re, i) {
 		var matches = text.match(re),
@@ -238,7 +238,7 @@ function processChars(text, regExes) {
 			count = matches.join().length;
 			
 			console.log('send char count for exp '+i, count);
-			sendToAll('/com/notioncollective/chars/'+i, count, {count:count});
+			sendToAll(getChannel('chars', i), count, {count:count});
 		}
 	});
 }
@@ -249,8 +249,8 @@ function processChars(text, regExes) {
  */
 function sendCharsCount(count) {
 	console.log('send chars count: '+count);
-	oscClient.send('/com/notioncollective/chars', count);
-	connection.emit('/com/notioncollective/chars', {count: count});
+	oscClient.send(getChannel('chars'), count);
+	connection.emit(getChannel('chars'), {count: count});
 }
 
 /**
@@ -259,16 +259,43 @@ function sendCharsCount(count) {
  */
 function sendWordsCount(count) {
 	console.log('send words count: '+count);
-	oscClient.send('/com/notioncollective/words', count);
-	connection.emit('/com/notioncollective/words', {count: count});
+	oscClient.send(getChannel('words'), count);
+	connection.emit(getChannel('words'), {count: count});
 }
 
 
-function sendToAll(endpoint, oscData, ioData) {
-	console.log('send to '+endpoint+':', oscData, ioData);
+/**
+ * Get a channel name.
+ * @param  {String} name Name of the channel ('notes')
+ * @param  {Number} rule Expression number for channel (optional)
+ * @return {String}      Channel name.
+ */
+function getChannel(name, rule) {
+	var ns = '/com/notioncollective/',
+		channel;
 
-	oscClient.send(endpoint, oscData);
-	connection.emit(endpoint, ioData);
+	if(_.isFinite(rule)) {
+		channel = ns+rule+'/'+name;
+	} else {
+		channel = ns + name;
+	}
+
+	console.log('channel '+channel);
+
+	return channel;
+}
+
+/**
+ * Send information to osc and the socket.io client on the same channel.
+ * @param  {String} channel The channel to send to ('/com/notioncollective/notes')
+ * @param  {Object} oscData  Data to use in osc message
+ * @param  {Object} ioData   Data to send as socket.io message
+ */
+function sendToAll(channel, oscData, ioData) {
+	console.log('send to '+channel+':', oscData, ioData);
+
+	oscClient.send(channel, oscData);
+	connection.emit(channel, ioData);
 }
 
 /**
@@ -282,10 +309,9 @@ function parseNotes(text, regExes) {
 	  globalNotes = _.uniq(text.match(notesRegEx));
 
 	if(globalNotes && globalNotes.length) {
-		oscClient.send(createNotesMessage('/com/notioncollective/notes', globalNotes));
+		oscClient.send(createNotesMessage(getChannel('notes'), globalNotes));
 	}
 
-	console.log('**current regexes', regExes);
 	regExes.forEach(function(re, i) {
 		var matches = text.match(re)
 			, notes;
@@ -294,7 +320,7 @@ function parseNotes(text, regExes) {
 			notes = _.uniq(matches.join().match(notesRegEx));
 
 			if(notes && notes.length) {
-				oscClient.send(createNotesMessage('/com/notioncollective/notes/'+i, notes));
+				oscClient.send(createNotesMessage(getChannel('notes', i), notes));
 			}
 		}	
 
