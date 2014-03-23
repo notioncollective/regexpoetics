@@ -22,19 +22,21 @@ Open up your browser to [http://localhost:3000](http://localhost:3000)
 ## OSC Endpoints
 
  * `/com/notioncollective/key` - fires on every keydown in text input
+ * `/com/notioncollective/[n]` - all messages for expression #n
  * `/com/notioncollective/notes` - each individual matched note is a separate param, with a number
- * `/com/notioncollective/notes/[n]` same as above, but only for the selected regex
+ * `/com/notioncollective/[n]/notes` - same as above, but only for the selected regex
  * `/com/notioncollective/words` - word count for entire contents of text input
- * `/com/notioncollective/words/[n]` - word count for matches of expression n
+ * `/com/notioncollective/[n]/words` - word count for matches of expression n
  * `/com/notioncollective/chars` - chartacter count for entire contents of text input
- * `/com/notioncollective/chars/[n]` - character count for matches for expression n
+ * `/com/notioncollective/[n]/chars` - character count for matches for expression n
  * `/com/notioncollective/count` - count of matches for all regexes
- * `/com/notioncollective/count/[n]` - count of matches for regex #n
+ * `/com/notioncollective/[n]/count` - count of matches for regex #n
 
 ## Some handy regular expressions
 
  * `/[^\s]*?abc[^\s]*?$/` - Capture words that contain "abc" only if they are the last word in the line
  * `/\w+\.$/` - Capture the last word in a sentence followed by a period.
+ * `/(^|\n)+?\n$/` - Capture the last line
  * _How to do **not** "money"? [Almost there but not quite](http://stackoverflow.com/questions/406230/regular-expression-to-match-string-not-containing-a-word)_
 
 ## Todo
