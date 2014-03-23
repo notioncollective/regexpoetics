@@ -26,7 +26,7 @@ Open up your browser to [http://localhost:3000](http://localhost:3000)
  * `/com/notioncollective/notes/[n]` same as above, but only for the selected regex
  * `/com/notioncollective/words` - word count for entire contents of text input
  * `/com/notioncollective/chars` - chartacter count for entire contents of text input
- * `/com/notioncollective/count/[n]` - count of matches for all regexes
+ * `/com/notioncollective/count` - count of matches for all regexes
  * `/com/notioncollective/count/[n]` - count of matches for regex #n
 
 ## Some handy regular expressions
