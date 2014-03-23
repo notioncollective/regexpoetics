@@ -194,7 +194,7 @@ function processText(text, regExes) {
 
 	console.log('send global matches count: ', globalCount);
 	// send global matches count
-	oscClient.send('/com/notioncollective/count/', globalCount);
+	oscClient.send('/com/notioncollective/count', globalCount);
 
 }
 
