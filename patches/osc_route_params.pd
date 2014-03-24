@@ -1,0 +1,14 @@
+#N canvas 960 22 960 505 10;
+#X obj 30 -5 inlet;
+#X obj 30 79 outlet;
+#X obj 78 79 outlet;
+#X obj 125 79 outlet;
+#X obj 172 79 outlet;
+#X obj 30 26 routeOSC /count /words /chars /notes /key;
+#X obj 221 79 outlet;
+#X connect 0 0 5 0;
+#X connect 5 0 1 0;
+#X connect 5 1 2 0;
+#X connect 5 2 3 0;
+#X connect 5 3 4 0;
+#X connect 5 4 6 0;
