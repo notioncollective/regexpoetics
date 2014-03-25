@@ -1,7 +1,7 @@
 module.exports = exports = {
 	title : 'regexpoetics'
 	, osc: {
-		host : '127.0.0.1'
+		host : 'localhost'
 		, port : 9002
 	}
 }
