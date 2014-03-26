@@ -1,4 +1,4 @@
-#N canvas 29 123 726 633 10;
+#N canvas 327 22 726 633 10;
 #X declare -lib mrpeach;
 #X obj 17 29 nc_osc_receive;
 #X obj 18 72 osc_route_params;
@@ -20,7 +20,7 @@
 #X text 566 56 4/;
 #X obj 679 72 adc~;
 #X obj 536 561 nc_dac~;
-#X text 678 39 audio input;
+#X text 640 50 audio input;
 #X connect 0 0 1 0;
 #X connect 0 0 3 0;
 #X connect 3 0 5 0;

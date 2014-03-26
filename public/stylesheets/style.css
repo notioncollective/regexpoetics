@@ -173,6 +173,7 @@ body {
   pisition: relative;
   font-size: 30px;
   background: #111111;
+  color: #777777;
 }
 textarea {
   width: 100%;
