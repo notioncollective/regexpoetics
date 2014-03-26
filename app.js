@@ -40,8 +40,11 @@ app.get('/', function(req, res){
   res.render('index', conf);
 });
 
+app.get('/wordfinder/:letters', require('./routes/word-finder'));
+
 // setup the osc server
-oscClient = new osc.Client('192.168.0.16', 9002);
+oscClient = new osc.Client(conf.osc.host, conf.osc.port);
+console.log('OSC client running for host "'+conf.osc.host+'", port '+conf.osc.port);
 
 // setup the socket.io connection
 connection = io.listen(server);
