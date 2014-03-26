@@ -180,6 +180,11 @@ textarea {
   font-family: monospace;
   color: #ddd;
   background: #111111;
+  padding: .5em;
+}
+textarea:focus {
+  outline: none;
+  background: #222222;
 }
 textarea#Rules {
   position: absolute;
@@ -190,6 +195,7 @@ textarea#Rules {
 }
 textarea#Rules.invalid {
   color: #fa0505;
+  background: #4d2016;
 }
 textarea#Text {
   position: absolute;

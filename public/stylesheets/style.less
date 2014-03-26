@@ -1,6 +1,8 @@
 @import "../components/normalize-less/normalize.less";
 
 @background: #111;
+@focusBackground: #222;
+@invalidBackground: #4D2016;
 @accent: #777;
 @rulesText: #9BF29E;
 @rulesTextInvalid: #FA0505;
@@ -20,6 +22,12 @@ textarea {
 	font-family: monospace;
 	color: #ddd;
 	background: @background;
+	padding: .5em;
+
+	&:focus {
+		outline: none;
+		background: @focusBackground;
+	}
 }
 
 textarea#Rules {
@@ -31,6 +39,7 @@ textarea#Rules {
 
 	&.invalid {
 		color: @rulesTextInvalid;
+		background: @invalidBackground;
 	}
 }
 
