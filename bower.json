@@ -11,6 +11,8 @@
     "requirejs": "~2.1.11",
     "jquery": "~2.1.0",
     "underscore": "~1.6.0",
-    "normalize-less": "latest"
+    "normalize-less": "latest",
+    "pd-abstractions" : "https://github.com/notioncollective/pd-abstractions/archive/master.zip",
+    "metastudio" : "http://sharktracks.co.uk/puredata/metastudio-0.3-11b.zip"
   }
 }
