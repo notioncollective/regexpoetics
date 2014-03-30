@@ -1,0 +1,16 @@
+ALL EXPRESSIONS:
+
+/^(MONEY\n)$/ /(money)/ /\${5}/ /\n(.*money\s){5}\n$/ /\n(.*?)\n$/
+
+
+SCORE:
+
+/^(MONEY\n)$/
+
+/* this will reset everything and turn on the sounrd */
+
+mmomonmonemoneymmomon
+
+/* typist continues rhythmic patterns like above, interpreter types in the next expression: */
+
+/(money)/
