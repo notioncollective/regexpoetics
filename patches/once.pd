@@ -1,0 +1,16 @@
+#N canvas 0 22 1334 770 10;
+#X obj 70 62 expr $f1 \; if ($f1 == $f2 \, 0 \, 1);
+#X obj 72 107 spigot;
+#X obj 25 45 inlet;
+#X floatatom 218 63 5 0 0 0 - - -;
+#X obj 218 22 inlet;
+#X msg 218 43 0;
+#X obj 72 135 outlet;
+#X connect 0 0 3 0;
+#X connect 0 1 1 1;
+#X connect 1 0 6 0;
+#X connect 2 0 0 0;
+#X connect 2 0 1 0;
+#X connect 3 0 0 1;
+#X connect 4 0 5 0;
+#X connect 5 0 3 0;
