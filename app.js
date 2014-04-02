@@ -40,6 +40,10 @@ app.get('/', function(req, res){
   res.render('index', conf);
 });
 
+app.get('/watch', function(req, res) {
+	res.render('watch', conf);
+});
+
 app.get('/wordfinder/:letters', require('./routes/word-finder'));
 
 // setup the osc server
