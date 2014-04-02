@@ -8,14 +8,25 @@ define([
 	, io
 ) {
 	var self = {}
+		, readOnlyView = 'watch'
 		, $rulesInput
 		, $textInput
 		, $nav
-		, connection;
+		, connection
+		, isReadOnly;
 
 
 	function start () {
+		var ruleUpdateCb
+			, textUpdateCb;
+
 		console.log('start app!');
+
+		// determine whether we are in read only view
+		isReadOnly = (window.location.pathname.indexOf(readOnlyView) !== -1);
+		// set callbacks accordingly
+		ruleUpdateCb = isReadOnly ? onUpdateRulesReadOnly : onUpdateRules;
+		textUpdateCb = isReadOnly ? onUpdateTextReadOnly : onUpdateText;
 
 		connection = io.connect();
 
@@ -25,8 +36,8 @@ define([
 		connection.on('disconnect', onSocketDisconnect);
 
 		// status updates
-		connection.on('/com/notioncollective/rules', onUpdateRules);
-		connection.on('/com/notioncollective/text', onUpdateText);	
+		connection.on('/com/notioncollective/rules', ruleUpdateCb);
+		connection.on('/com/notioncollective/text', textUpdateCb);	
 
 		$(onDomReady);
 	}
@@ -34,14 +45,16 @@ define([
 	function onDomReady () {
 		console.log('domReady');
 
-		$rulesInput = $('textarea#Rules');
-		$textInput = $('textarea#Text');
+		$rulesInput = $('#Rules');
+		$textInput = $('#Text');
 
-		$rulesInput.keyup(onTextAreaChange);
-		$textInput.keyup(onTextAreaChange);
-		$textInput.keypress(onTextKeyPress);
+		if(!isReadOnly) {
+			$rulesInput.keyup(onTextAreaChange);
+			$textInput.keyup(onTextAreaChange);
+			$textInput.keypress(onTextKeyPress);
 
-		setupControls();
+			setupControls();
+		}
 	}
 
 	function setupControls() {
@@ -89,7 +102,7 @@ define([
 		connection.emit('/com/notioncollective/key');
 	}
 
-	function onUpdateRules(data) {
+	function onUpdateRules (data) {
 		console.log('rules update', data);
 		if($rulesInput) {
 			$rulesInput.toggleClass('invalid', !data.valid);
@@ -100,10 +113,41 @@ define([
 		}
 	}
 
-	function onUpdateText(data) {
+	function onUpdateRulesReadOnly (data) {
+		var	tokens = []
+			, html = '';
+
+		console.log('rules update read only', data);
+
+		if($rulesInput) {
+			$rulesInput.toggleClass('invalid', !data.valid);
+
+			if(data.valid) {
+				tokens = data.text.split(/\s(?=\/)/);
+				_(tokens).each(function (token) {
+					html += '<span class="token">'+token+'</span>';
+				});
+
+			} else {
+				html = '<div class="wrap-invalid">'+data.text+'</div>';
+			}
+
+			$rulesInput.html(html);
+		}
+	}
+
+
+	function onUpdateText (data) {
 		console.log('text update', data)
 		if($textInput && !$textInput.is(':focus')) {
 			$textInput.val(data.text);
+		}
+	}
+
+	function onUpdateTextReadOnly (data) {
+		console.log('text update read only', data);
+		if($textInput) {
+			$textInput.find('.wrap').html(data.text);
 		}
 	}
 

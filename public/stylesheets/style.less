@@ -5,14 +5,15 @@
 @invalidBackground: #4D2016;
 @accent: #777;
 @rulesText: #9BF29E;
+@rulesTextUnmatched: #777777;
 @rulesTextInvalid: #FA0505;
 @poesyText: #ddd;
 
 
 body {
 	height: 100%;
-	pisition: relative;
 	font-size: 30px;
+	pisition: relative;
 	background: @background;
 	color: @accent;
 }
@@ -20,10 +21,9 @@ body {
 textarea {
 	width: 100%;
 	border: none;
-	font-family: monospace;
 	color: #ddd;
 	background: @background;
-	padding: .5em;
+	// padding: .5em;
 
 	&:focus {
 		outline: none;
@@ -31,29 +31,70 @@ textarea {
 	}
 }
 
-textarea#Rules {
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 10%;
-	color: @rulesText;
+#Wrap {
 
-	&.invalid {
-		color: @rulesTextInvalid;
-		background: @invalidBackground;
+	width: 100%;
+	height: 100%;
+	font-family: monospace;
+
+	&.read-only {
+		font-size: 25px;
+	}
+
+	#Rules {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 10%;
+		width: 100%;
+		color: @rulesText;
+
+		&.invalid {
+			color: @rulesTextInvalid;
+			background: @invalidBackground;
+		}
+
+		&.read-only {
+			.token {
+				display: inline-block;
+				background: @focusBackground;
+				padding: 5px;
+				margin: 5px;
+				color: @rulesTextUnmatched;
+
+				&.match {
+					color: @rulesText;
+				}
+			}
+
+			.wrap-invalid {
+				margin: 10px;
+			}
+		}
+
+
+	}
+
+	#Text {
+		position: absolute;
+		top: 10%;
+		left: 0;
+		height: 90%;
+		width: 100%;
+		color: @poesyText;
+		border-top: 3px dotted @accent;
+
+		&.read-only {
+
+		}
+
+		.wrap {
+			margin: .25em;
+		}
 	}
 }
 
-textarea#Text {
-	position: absolute;
-	top: 10%;
-	left: 0;
-	height: 90%;
-	color: @poesyText;
-	border-top: 3px dotted @accent;
-}
-
-nav#Nav {
+#Nav {
 	display: none;
 	position: absolute;
 	bottom: 0;
