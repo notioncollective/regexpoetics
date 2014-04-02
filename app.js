@@ -221,7 +221,8 @@ function processText(text, regExes) {
 		 	console.log('test re for exp '+i, matches, count);
 
 		 	// send matches count for this regex
-		 	oscClient.send(getChannel('count', i), count);
+		 	sendToAll(getChannel('count', i), count, {count: count, rule: i});
+		 	// oscClient.send(getChannel('count', i), count);
 		}
 	});
 
@@ -253,7 +254,7 @@ function processWords(text, regExes) {
 				.value().length;
 			
 			console.log('send word count for exp '+i, count);
-			sendToAll(getChannel('words', i), count, {count:count});
+			sendToAll(getChannel('words', i), count, {count:count,  rule: i});
 		}
 	});
 
@@ -272,7 +273,7 @@ function processChars(text, regExes) {
 			count = matches.join().length;
 			
 			console.log('send char count for exp '+i, count);
-			sendToAll(getChannel('chars', i), count, {count:count});
+			sendToAll(getChannel('chars', i), count, {count:count, rule: i});
 		}
 	});
 }

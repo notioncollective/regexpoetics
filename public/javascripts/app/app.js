@@ -8,6 +8,7 @@ define([
 	, io
 ) {
 	var self = {}
+		, matchCount = []
 		, readOnlyView = 'watch'
 		, $rulesInput
 		, $textInput
@@ -18,7 +19,8 @@ define([
 
 	function start () {
 		var ruleUpdateCb
-			, textUpdateCb;
+			, textUpdateCb,
+			channels = [0,1,2,3,4,5];
 
 		console.log('start app!');
 
@@ -37,9 +39,35 @@ define([
 
 		// status updates
 		connection.on('/com/notioncollective/rules', ruleUpdateCb);
-		connection.on('/com/notioncollective/text', textUpdateCb);	
+		connection.on('/com/notioncollective/text', textUpdateCb);
+
+		_(channels).each(function(n) {
+			console.log('listen to channel '+n+' for count');
+			connection.on('/com/notioncollective/'+n+'/count', onUpdateRuleMatches);
+		});
 
 		$(onDomReady);
+	}
+
+	function onUpdateRuleMatches(data) {
+		var rule = data.rule
+			, count = data.count;
+
+		console.log('update rule matches', data);
+
+		if(!matchCount[rule] || matchCount[rule] < count) {
+			onNewMatch(rule, count);
+		}
+
+		matchCount[rule] = count;
+	}
+
+	function onNewMatch(rule, count) {
+		var $t = $('#Rules').find('.token:eq('+rule+')');
+		
+		if($t.length) {
+			$t.toggleClass('match', !!count);
+		}
 	}
 
 	function onDomReady () {
@@ -124,8 +152,14 @@ define([
 
 			if(data.valid) {
 				tokens = data.text.split(/\s(?=\/)/);
-				_(tokens).each(function (token) {
-					html += '<span class="token">'+token+'</span>';
+				_(tokens).each(function (token, i) {
+					html += '<span class="token'
+
+					// make sure we keep track of matches
+					if(matchCount[i]) {
+						html += ' match';
+					}
+					html += '">'+token+'</span>';
 				});
 
 			} else {
