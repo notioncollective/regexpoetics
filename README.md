@@ -41,6 +41,7 @@ Open up your browser to [http://localhost:3000](http://localhost:3000)
  * _How to do **not** "money"? [Almost there but not quite](http://stackoverflow.com/questions/406230/regular-expression-to-match-string-not-containing-a-word)_
 
 ## Todo
+ - send ascii characters instead of notes
  - Add ability to do sharps/flats
  	- captial letter is sharp?
  - Add ability to add flags to regex
