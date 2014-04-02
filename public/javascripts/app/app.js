@@ -1,5 +1,5 @@
 define([
-	'jquery'
+	'jquery-color'
 	, 'underscore'
 	, 'socket.io'
 ], function (
@@ -63,10 +63,17 @@ define([
 	}
 
 	function onNewMatch(rule, count) {
-		var $t = $('#Rules').find('.token:eq('+rule+')');
+		var $t = $('#Rules').find('.token:eq('+rule+')'),
+			origColor;
 		
 		if($t.length) {
 			$t.toggleClass('match', !!count);
+
+			origColor = $.Color($t.css('color'));
+
+			$t
+				.animate({ color: $.Color('#fff') }, 0)
+				.animate({ color: origColor }, 1000)
 		}
 	}
 

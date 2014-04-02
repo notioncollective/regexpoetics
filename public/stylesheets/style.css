@@ -229,6 +229,7 @@ textarea:focus {
 }
 #Wrap #Text .wrap {
   margin: .25em;
+  white-space: pre;
 }
 #Nav {
   display: none;

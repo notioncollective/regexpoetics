@@ -5,13 +5,18 @@ requirejs.config({
 
 	, paths : {
 		'jquery' : '../components/jquery/dist/jquery'
+		, 'jquery-color' : '../components/jquery-color/jquery.color'
 		, 'underscore' : '../components/underscore/underscore'
 		, 'socket.io' : '../components/socket.io-client/socket.io'
 	}
 
 	, shim : {
 		'jquery' : {
-			exports: ['jQuery']
+			exports: 'jQuery'
+		}
+		, 'jquery-color' : {
+			deps: ['jquery']
+			, exports: 'jQuery'
 		}
 	}
 });
