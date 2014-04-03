@@ -228,6 +228,10 @@ define([
 		if($textInput) {
 			$textInput.find('.wrap').html(data.text);
 			// updateMatchState();
+			$textInput.scrollTop($textInput.prop('scrollHeight'));
+			// $textInput.animate(
+			// 	{ scollTop: $textInput.height() }
+			// , 500);
 		}
 	}
 
