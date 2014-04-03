@@ -16,6 +16,7 @@ body {
 	pisition: relative;
 	background: @background;
 	color: @accent;
+	overflow: hidden;
 }
 
 textarea {
@@ -60,11 +61,11 @@ textarea {
 				background: @focusBackground;
 				padding: 5px;
 				margin: 5px;
-				color: @rulesTextUnmatched;
+				color: @rulesText;
 
-				&.match {
-					color: @rulesText;
-				}
+				// &.match {
+				// 	color: @rulesText;
+				// }
 			}
 
 			.wrap-invalid {
@@ -85,7 +86,7 @@ textarea {
 		border-top: 3px dotted @accent;
 
 		&.read-only {
-
+			overflow: scroll;
 		}
 
 		.wrap {

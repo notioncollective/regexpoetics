@@ -61,7 +61,7 @@ define([
 		}
 
 		matchCount[re] = count;
-		updateMatchState();
+		// updateMatchState();
 	}
 
 	function removeFlags(reStr) {
@@ -82,14 +82,15 @@ define([
 		console.log('onNewMatch', arguments);
 		
 		if($t.length) {
-			$t.toggleClass('match', !!count);
+			// $t.toggleClass('match', !!count);
 
 			if(count) {
-				origColor = $.Color($t.css('color'));
+				origColor = $.Color('#9BF29E');
 
 				$t
+					.stop(true)
 					.animate({ color: $.Color('#fff') }, 0)
-					.animate({ color: origColor }, 1000)
+					.animate({ color: origColor }, 2000)
 			}
 		}
 	}
@@ -188,7 +189,7 @@ define([
 					$html.append($token);
 				});
 			
-				updateMatchState();
+				// updateMatchState();
 
 			} else {
 				$html
@@ -200,19 +201,19 @@ define([
 		}
 	}
 
-	function updateMatchState() {
-		var $tokens = $rulesInput.find('.token');
+	// function updateMatchState() {
+	// 	var $tokens = $rulesInput.find('.token');
 
-		console.log('updateMatchState');
+	// 	console.log('updateMatchState');
 
-		$tokens.each(function(i, el) {
-			var $t = $(this)
-				, re = $t.data('re');
+	// 	$tokens.each(function(i, el) {
+	// 		var $t = $(this)
+	// 			, re = $t.data('re');
 
-			console.log('update match state', re, !!matchCount[re]);
-			$t.toggleClass('match', !!matchCount[re]);
-		});
-	}
+	// 		console.log('update match state', re, !!matchCount[re]);
+	// 		$t.toggleClass('match', !!matchCount[re]);
+	// 	});
+	// }
 
 
 	function onUpdateText (data) {
@@ -226,7 +227,7 @@ define([
 		console.log('text update read only', data);
 		if($textInput) {
 			$textInput.find('.wrap').html(data.text);
-			updateMatchState();
+			// updateMatchState();
 		}
 	}
 
