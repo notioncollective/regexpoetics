@@ -56,11 +56,12 @@ define([
 
 		console.log('update rule matches', data);
 
-		if(!matchCount[re] || matchCount[re] < count) {
+		if(!matchCount[re] || matchCount[re] !== count) {
 			onNewMatch(rule, count);
 		}
 
 		matchCount[re] = count;
+		updateMatchState();
 	}
 
 	function removeFlags(reStr) {
@@ -201,6 +202,8 @@ define([
 
 	function updateMatchState() {
 		var $tokens = $rulesInput.find('.token');
+
+		console.log('updateMatchState');
 
 		$tokens.each(function(i, el) {
 			var $t = $(this)
