@@ -54,6 +54,11 @@ Open up your browser to [http://localhost:3000](http://localhost:3000)
 
 ## Release Notes
 
+### 0.1.0
+ * Added `/watch` view for live display of text/rules
+ 	* includes highlighting rules when there is a match
+ 	* read-only
+
 ### 0.0.7
  * Tagging master before merging in "watch" branch
 
