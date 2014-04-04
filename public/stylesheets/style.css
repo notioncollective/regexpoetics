@@ -227,10 +227,12 @@ textarea:focus {
 }
 #Wrap #Text.read-only {
   overflow: scroll;
+  word-wrap: break-word;
 }
 #Wrap #Text .wrap {
   margin: .25em;
   white-space: pre;
+  width: 100%;
 }
 #Nav {
   display: none;
