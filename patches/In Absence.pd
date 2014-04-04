@@ -88,10 +88,10 @@
 #X obj 987 173 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X text 951 155 load samples;
-#X msg 497 763 v1 90 \, v2 90 \, v3 75 \, a1a1 1 \, a1a2 1 \, a2a1
-1 \, a2a2 1 \, a3a1 1 \, a3a2 1 \, limit 1 \, send1 80;
 #X msg 214 574 on 1 \, roomsize 1 \, wide 1 \, balance 1;
 #X msg 568 880 on 1 \, roomsize 1 \, wide 1 \, balance 1;
+#X msg 497 763 v1 90 \, v2 90 \, v3 75 \, a1a1 1 \, a2a1 1 \, a2a2
+1 \, a3a1 1 \, a3a2 1 \, limit 1 \, send1 80;
 #X connect 0 0 1 0;
 #X connect 0 0 3 0;
 #X connect 3 0 5 0;
@@ -134,8 +134,8 @@
 #X connect 43 0 32 1;
 #X connect 44 0 25 0;
 #X connect 44 1 25 1;
-#X connect 45 0 70 0;
-#X connect 46 0 71 0;
+#X connect 45 0 69 0;
+#X connect 46 0 70 0;
 #X connect 47 0 48 0;
 #X connect 48 1 25 0;
 #X connect 48 1 25 1;
@@ -154,10 +154,10 @@
 #X connect 63 0 47 1;
 #X connect 64 0 65 0;
 #X connect 65 0 31 1;
-#X connect 66 0 69 0;
+#X connect 66 0 71 0;
 #X connect 67 0 41 0;
 #X connect 67 0 42 0;
 #X connect 67 0 43 0;
-#X connect 69 0 24 5;
-#X connect 70 0 23 2;
-#X connect 71 0 44 2;
+#X connect 69 0 23 2;
+#X connect 70 0 44 2;
+#X connect 71 0 24 5;
