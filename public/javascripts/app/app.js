@@ -51,29 +51,47 @@ define([
 
 	function onUpdateRuleMatches(data) {
 		var rule = data.rule
-			, count = data.count;
+			, count = data.count
+			, re = removeFlags(data.regExp);
 
 		console.log('update rule matches', data);
 
-		if(!matchCount[rule] || matchCount[rule] < count) {
+		if(!matchCount[re] || matchCount[re] !== count) {
 			onNewMatch(rule, count);
 		}
 
-		matchCount[rule] = count;
+		matchCount[re] = count;
+		// updateMatchState();
+	}
+
+	function removeFlags(reStr) {
+		var flagPat = /\/[gimy]+$/,
+			split;
+
+		if(flagPat.test(reStr)) {
+			reStr = reStr.replace(flagPat, '/');
+		}
+
+		return reStr;
 	}
 
 	function onNewMatch(rule, count) {
 		var $t = $('#Rules').find('.token:eq('+rule+')'),
 			origColor;
+
+		console.log('onNewMatch', arguments);
 		
 		if($t.length) {
-			$t.toggleClass('match', !!count);
+			// $t.toggleClass('match', !!count);
 
-			origColor = $.Color($t.css('color'));
+			if(count) {
+				origColor = $.Color('#9BF29E');
 
-			$t
-				.animate({ color: $.Color('#fff') }, 0)
-				.animate({ color: origColor }, 1000)
+				$t
+					.stop(true)
+					.animate({ color: $.Color('#fff') }, 0)
+					.animate({ color: origColor }, 2000)
+			}
 		}
 	}
 
@@ -150,7 +168,7 @@ define([
 
 	function onUpdateRulesReadOnly (data) {
 		var	tokens = []
-			, html = '';
+			, $html = $('<div>');
 
 		console.log('rules update read only', data);
 
@@ -158,24 +176,44 @@ define([
 			$rulesInput.toggleClass('invalid', !data.valid);
 
 			if(data.valid) {
+				$html.addClass('wrap');
+
 				tokens = data.text.split(/\s(?=\/)/);
 				_(tokens).each(function (token, i) {
-					html += '<span class="token'
+					var $token = $('<span>');
 
-					// make sure we keep track of matches
-					if(matchCount[i]) {
-						html += ' match';
-					}
-					html += '">'+token+'</span>';
+					$token
+						.addClass('token')
+						.data('re', token)
+						.html(token);
+					$html.append($token);
 				});
+			
+				// updateMatchState();
 
 			} else {
-				html = '<div class="wrap-invalid">'+data.text+'</div>';
+				$html
+					.addClass('wrap-invalid')
+					.html(data.text);
 			}
 
-			$rulesInput.html(html);
+			$rulesInput.html($html);
 		}
 	}
+
+	// function updateMatchState() {
+	// 	var $tokens = $rulesInput.find('.token');
+
+	// 	console.log('updateMatchState');
+
+	// 	$tokens.each(function(i, el) {
+	// 		var $t = $(this)
+	// 			, re = $t.data('re');
+
+	// 		console.log('update match state', re, !!matchCount[re]);
+	// 		$t.toggleClass('match', !!matchCount[re]);
+	// 	});
+	// }
 
 
 	function onUpdateText (data) {
@@ -189,6 +227,11 @@ define([
 		console.log('text update read only', data);
 		if($textInput) {
 			$textInput.find('.wrap').html(data.text);
+			// updateMatchState();
+			$textInput.scrollTop($textInput.prop('scrollHeight'));
+			// $textInput.animate(
+			// 	{ scollTop: $textInput.height() }
+			// , 500);
 		}
 	}
 
