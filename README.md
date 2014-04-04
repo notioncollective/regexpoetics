@@ -54,6 +54,9 @@ Open up your browser to [http://localhost:3000](http://localhost:3000)
 
 ## Release Notes
 
+### 0.0.7
+ * Tagging master before merging in "watch" branch
+
 ### 0.0.6
  - Menu bar for various options
  	- OSC send parameters (ip, port)
