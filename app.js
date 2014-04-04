@@ -223,8 +223,6 @@ function processText(text, regExes) {
 		 	// send matches count for this regex
 		 	sendToAll(getChannel('count', i), count, {count: count, rule: i, regExp: re.toString()});
 		 	// oscClient.send(getChannel('count', i), count);
-		} else {
-		 	sendToAll(getChannel('count', i), 0, {count: 0, rule: i, regExp: re.toString()});			
 		}
 	});
 

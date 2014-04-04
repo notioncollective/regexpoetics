@@ -212,6 +212,7 @@ textarea:focus {
   padding: 5px;
   margin: 5px;
   color: #9bf29e;
+  text-shadow: 1px 1px 1px #000000;
 }
 #Wrap #Rules.read-only .wrap-invalid {
   margin: 10px;
@@ -227,10 +228,12 @@ textarea:focus {
 }
 #Wrap #Text.read-only {
   overflow: scroll;
+  word-wrap: break-word;
 }
 #Wrap #Text .wrap {
   margin: .25em;
   white-space: pre;
+  width: 100%;
 }
 #Nav {
   display: none;

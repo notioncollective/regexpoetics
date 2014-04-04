@@ -77,7 +77,8 @@ define([
 
 	function onNewMatch(rule, count) {
 		var $t = $('#Rules').find('.token:eq('+rule+')'),
-			origColor;
+			origColor,
+			origBgColor;
 
 		console.log('onNewMatch', arguments);
 		
@@ -86,11 +87,17 @@ define([
 
 			if(count) {
 				origColor = $.Color('#9BF29E');
-
+				origBgColor = $.Color('#222');
 				$t
 					.stop(true)
-					.animate({ color: $.Color('#fff') }, 0)
-					.animate({ color: origColor }, 2000)
+					.animate({ 
+						color: $.Color('#fff')
+						, backgroundColor: $.Color('#333')
+					}, 0)
+					.animate({
+						color: origColor
+						, backgroundColor: origBgColor
+					}, 2000)
 			}
 		}
 	}

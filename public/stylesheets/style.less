@@ -62,7 +62,7 @@ textarea {
 				padding: 5px;
 				margin: 5px;
 				color: @rulesText;
-
+				text-shadow: 1px 1px 1px rgb(0,0,0);
 				// &.match {
 				// 	color: @rulesText;
 				// }
@@ -87,11 +87,13 @@ textarea {
 
 		&.read-only {
 			overflow: scroll;
+			word-wrap: break-word;
 		}
 
 		.wrap {
 			margin: .25em;
 			white-space: pre;
+			width: 100%;
 		}
 	}
 }
