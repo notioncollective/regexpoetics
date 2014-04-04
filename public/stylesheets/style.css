@@ -212,6 +212,7 @@ textarea:focus {
   padding: 5px;
   margin: 5px;
   color: #9bf29e;
+  text-shadow: 1px 1px 1px #000000;
 }
 #Wrap #Rules.read-only .wrap-invalid {
   margin: 10px;
