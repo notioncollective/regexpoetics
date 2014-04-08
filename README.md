@@ -54,6 +54,10 @@ Open up your browser to [http://localhost:3000](http://localhost:3000)
 
 ## Release Notes
 
+### 0.1.1
+ * Some style tweaks
+ * This is the version used for the 4/4/2014 performance
+
 ### 0.1.0
  * Added `/watch` view for live display of text/rules
  	* includes highlighting rules when there is a match
