@@ -42,6 +42,10 @@ textarea {
 		font-size: 25px;
 	}
 
+	&.word-finder {
+		overflow: scroll;
+	}
+
 	#Rules {
 		position: absolute;
 		top: 0;
@@ -56,11 +60,12 @@ textarea {
 		}
 
 		&.read-only {
+			height: 90px;
 			.token {
 				display: inline-block;
 				background: @focusBackground;
 				padding: 5px;
-				margin: 5px;
+				margin: 2px;
 				color: @rulesText;
 				text-shadow: 1px 1px 1px rgb(0,0,0);
 				// &.match {
@@ -86,6 +91,7 @@ textarea {
 		border-top: 3px dotted @accent;
 
 		&.read-only {
+			top: 90px;
 			overflow: scroll;
 			word-wrap: break-word;
 		}
