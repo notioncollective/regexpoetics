@@ -100,6 +100,9 @@ function onOscPortChange(data) {
 
 function onReset() {
 	console.log('reset sent');
+	// things that should happen on reset from websocket
+	// - clear both input fields (this should happen on client)
+	// - relay reset message to osc
 }
 
 /**

@@ -40,12 +40,29 @@ Open up your browser to [http://localhost:3000](http://localhost:3000)
  * `/(\n|^).*?\n/` - Capture every line
  * _How to do **not** "money"? [Almost there but not quite](http://stackoverflow.com/questions/406230/regular-expression-to-match-string-not-containing-a-word)_
 
+## Aesthetic Decisions
+ - Button to show/hide regular expressions
+
+
+## Annoying Things / Ways To Make This Easier On Ourselves
+ - Write instructions for setup
+ - Clean up samples/scores
+ - Figure out a way to have pd samples auto-load? (might not be possible)
+ - Figure out how to have mixer automatically set itself up? (might be a pain)
+
+
 ## Todo
  - send ascii characters instead of notes
  - Add ability to do sharps/flats
  	- captial letter is sharp?
  - Add ability to add flags to regex
- - Make reset button functional
+ - Control panel buttons
+ 	- There should be an "Update" button for updating the fields
+ 		- This will just send both the host and port (on client)
+ 	- "Reset" button
+ 		- Send an OSC reset message (on server)
+ 		- Clear all input fields (on client)
+ 	- "Sync" button?
  - Maybe we should use captures and not matches? Have to think about this a bit
  - Abstract messaging a bit so that all osc messages are also sent back to the client
  - Update namespacing to "/com/nc/regexpoetics/" ? Or something project-specific.
