@@ -194,6 +194,9 @@ textarea:focus {
 #Wrap.read-only {
   font-size: 25px;
 }
+#Wrap.word-finder {
+  overflow: scroll;
+}
 #Wrap #Rules {
   position: absolute;
   top: 0;
@@ -206,11 +209,14 @@ textarea:focus {
   color: #fa0505;
   background: #4d2016;
 }
+#Wrap #Rules.read-only {
+  height: 90px;
+}
 #Wrap #Rules.read-only .token {
   display: inline-block;
   background: #222222;
   padding: 5px;
-  margin: 5px;
+  margin: 2px;
   color: #9bf29e;
   text-shadow: 1px 1px 1px #000000;
 }
@@ -227,6 +233,7 @@ textarea:focus {
   border-top: 3px dotted #777777;
 }
 #Wrap #Text.read-only {
+  top: 90px;
   overflow: scroll;
   word-wrap: break-word;
 }
