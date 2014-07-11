@@ -1,6 +1,11 @@
 regexpoetics
 ============
 
+## Spreadsheet edition!
+
+
+
+
 A simple interface for turning regular expression patterns into osc messages.
 
 ## Instructions
@@ -39,6 +44,7 @@ Open up your browser to [http://localhost:3000](http://localhost:3000)
  * `/(^|\n)+?\n$/` - Capture the last line
  * `/(\n|^).*?\n/` - Capture every line
  * _How to do **not** "money"? [Almost there but not quite](http://stackoverflow.com/questions/406230/regular-expression-to-match-string-not-containing-a-word)_
+
 
 ## Aesthetic Decisions
  - Button to show/hide regular expressions
