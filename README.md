@@ -1,14 +1,11 @@
-regexpoetics
-============
+Regular Expressions
+====================
 
-## Spreadsheet edition!
+![Regular Expressions Screengrab](public/img/screen.png)
 
+Poems & patterns in your ears. A simple interface for converting written text into OSC messages.
 
-
-
-A simple interface for turning regular expression patterns into osc messages.
-
-## Instructions
+## Setup
 
 Install npm dependencies:
 
@@ -43,37 +40,31 @@ Open up your browser to [http://localhost:3000](http://localhost:3000)
  * `/\w+\.$/` - Capture the last word in a sentence followed by a period.
  * `/(^|\n)+?\n$/` - Capture the last line
  * `/(\n|^).*?\n/` - Capture every line
- * _How to do **not** "money"? [Almost there but not quite](http://stackoverflow.com/questions/406230/regular-expression-to-match-string-not-containing-a-word)_
-
-
-## Aesthetic Decisions
- - Button to show/hide regular expressions
-
-
-## Annoying Things / Ways To Make This Easier On Ourselves
- - Write instructions for setup
- - Clean up samples/scores
- - Figure out a way to have pd samples auto-load? (might not be possible)
- - Figure out how to have mixer automatically set itself up? (might be a pain)
-
+ * _How to do **not** a word? [Almost there but not quite](http://stackoverflow.com/questions/406230/regular-expression-to-match-string-not-containing-a-word)_
 
 ## Todo
- - send ascii characters instead of notes
- - Add ability to do sharps/flats
- 	- captial letter is sharp?
- - Add ability to add flags to regex
- - Control panel buttons
- 	- There should be an "Update" button for updating the fields
- 		- This will just send both the host and port (on client)
- 	- "Reset" button
- 		- Send an OSC reset message (on server)
- 		- Clear all input fields (on client)
- 	- "Sync" button?
- - Maybe we should use captures and not matches? Have to think about this a bit
- - Abstract messaging a bit so that all osc messages are also sent back to the client
- - Update namespacing to "/com/nc/regexpoetics/" ? Or something project-specific.
- - BUG: Sometimes live updating interferes with your typing.
- 	- Possible fix: each client gets a client id, sends that id with messages. 
+ - [ ] Change OSC namespacing from `notioncollective` to `regexpoetics`
+ - [ ] Write instructions for setup
+ - [ ] Clean up samples/scores
+ - [ ] Figure out a way to have pd samples auto-load? (might not be possible)
+ - [ ] Figure out how to have mixer automatically set itself up? (might be a pain)
+ - [ ] Button to show/hide regular expressions
+ - [ ] send ascii characters instead of notes
+ - [ ] Add ability to do sharps/flats
+ 	- [ ] captial letter is sharp?
+ - [ ] Add ability to add flags to regex
+ - [ ] Control panel buttons
+ 	- [ ] There should be an "Update" button for updating the fields
+ 		- [ ] This will just send both the host and port (on client)
+ 	- [ ] "Reset" button
+ 		- [ ] Send an OSC reset message (on server)
+ 		- [ ] Clear all input fields (on client)
+ 	- [ ] "Sync" button?
+ - [ ] Maybe we should use captures and not matches? Have to think about this a bit
+ - [ ] Abstract messaging a bit so that all osc messages are also sent back to the client
+ - [ ] Update namespacing to "/com/nc/regexpoetics/" ? Or something project-specific.
+ - [ ] BUG: Sometimes live updating interferes with your typing.
+ 	- [ ] Possible fix: each client gets a client id, sends that id with messages.
 
 ## Release Notes
 
